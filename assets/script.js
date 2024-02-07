@@ -16,3 +16,19 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
+
+let bannerArrowLeft = document.getElementById("banner_arrow_left");
+let bannerArrowRight= document.getElementById("banner_arrow_right");
+
+
+bannerArrowLeft.onmouseover = null;
+bannerArrowRight.onmouseover = null;
+
+bannerArrowLeft.onclick = function () {
+  console.log(bannerArrowLeft.getAttribute("alt"));  
+}
+
+bannerArrowRight.onclick = function () {
+  console.log(bannerArrowRight.getAttribute("alt"));  
+}
+
