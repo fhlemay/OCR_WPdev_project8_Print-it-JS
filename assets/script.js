@@ -17,32 +17,34 @@ const slides = [
 	}
 ]
 
+/* Pointeurs vers diverses diapositives. */
 let currentSlide = 0;
-let qtyOfSlides = slides.length;
-let arrowLeft = document.querySelector("#banner .arrow .arrow_left");
-let arrowRight= document.querySelector("#banner .arrow .arrow_right");
-let dots = document.querySelector("#banner .dots");
-let sliderImage = document.querySelector("#banner img");
-let sliderText = document.querySelector("#banner p");
-let sliderImagesPath = "./assets/images/slideshow/";
+const firstSlide = 0;
+const lastSlide = slides.length - 1;
 
-for (let i = 0; i < qtyOfSlides; i++) {
-  let dot = document.createElement("div");  
+/* Configuration */
+const sliderImagesPath = "./assets/images/slideshow/";
+
+/* Pointeurs vers les éléments du DOM où intégrer le carroussel. */
+const dots = document.querySelector("#banner .dots");
+const arrowLeft = document.querySelector("#banner .arrow_left");
+const arrowRight= document.querySelector("#banner .arrow_right");
+const sliderText = document.querySelector("#banner p");
+const sliderImage = document.querySelector("#banner img");
+
+/* Création des bullet points du carroussel. */
+for (let i = firstSlide; i <= lastSlide; i++) {
+  const dot = document.createElement("div");  
   dot.classList.add("dot");
-  if (i == currentSlide) {
-    dot.classList.add("dot_selected");
+  if (firstSlide == i) {
+    dot.classList.add("dot_selected"); // le point initialement sélectionné
   }
   dots.appendChild(dot);
 }
 
 function resetCurrentSelectedDot () {
-  let currentSelectedDot = document.querySelector("#banner .dots .dot_selected");
+  let currentSelectedDot = document.querySelector("#banner .dot_selected");
   currentSelectedDot.classList.remove("dot_selected");
-}
-
-function setSliderImage () {
-  sliderImage.src = sliderImagesPath + slides[currentSlide].image;
-  sliderText.innerHTML = slides[currentSlide].tagLine;
 }
 
 function setCurrentSelectedDot () {
@@ -54,16 +56,18 @@ function setCurrentSelectedDot () {
   }
 }
 
+function setSliderImage () {
+  sliderImage.src = sliderImagesPath + slides[currentSlide].image;
+  sliderText.innerHTML = slides[currentSlide].tagLine;
+}
+
 arrowLeft.onclick = function () {
 
   resetCurrentSelectedDot();
 
-  if (currentSlide == 0) {
-    currentSlide = qtyOfSlides - 1;
-  } else {
-    currentSlide--;
-  }
-  
+  /* Mise en oeuvre de la boucle infinie vers la GAUCHE. */
+  currentSlide = (currentSlide == firstSlide) ? lastSlide : currentSlide - 1 ; 
+
   setSliderImage();
   setCurrentSelectedDot();
 }
@@ -72,11 +76,8 @@ arrowRight.onclick = function () {
 
   resetCurrentSelectedDot();
 
-  if (currentSlide == (qtyOfSlides - 1)) {
-    currentSlide = 0;
-  } else {
-    currentSlide++;
-  }
+  /* Mise en oeuvre de la boucle infinie vers la DROITE. */
+  currentSlide = (currentSlide == lastSlide) ? firstSlide : currentSlide + 1 ; 
 
   setSliderImage();
   setCurrentSelectedDot();
