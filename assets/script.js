@@ -17,33 +17,16 @@ const slides = [
 	}
 ]
 
-/* 
- * Slider's arrows 
- * */
-let bannerArrowLeft = document.getElementById("banner_arrow_left");
-let bannerArrowRight= document.getElementById("banner_arrow_right");
-
-// bannerArrowLeft.onmouseover = null;
-// bannerArrowRight.onmouseover = null;
-
-bannerArrowLeft.onclick = function () {
-  console.log(bannerArrowLeft.getAttribute("alt"));  
-}
-
-bannerArrowRight.onclick = function () {
-  console.log(bannerArrowRight.getAttribute("alt"));  
-}
-
-/*
- * Slider's dots
- * */
-
 let currentSlide = 0;
+let qtySlides = slides.length;
+let bannerArrowLeft = document.querySelector("#banner .arrow .arrow_left");
+let bannerArrowRight= document.querySelector("#banner .arrow .arrow_right");
+let dots = document.querySelector("#banner .dots");
+let sliderImage = document.querySelector("#banner img");
+let sliderText = document.querySelector("#banner p");
+let sliderImagesPath = "./assets/images/slideshow/";
 
-let dots = document.getElementById("banner_dots");
-console.log(dots);
-
-for (let i = 0; i < slides.length; i++) {
+for (let i = 0; i < qtySlides; i++) {
   let dot = document.createElement("div");  
   if (i == currentSlide) {
     dot.classList.add("dot_selected");
@@ -51,3 +34,50 @@ for (let i = 0; i < slides.length; i++) {
   dot.classList.add("dot");
   dots.appendChild(dot);
 }
+
+bannerArrowLeft.onclick = function () {
+
+  let currentSelectedDot = document.querySelector("#banner .dots .dot_selected");
+  currentSelectedDot.classList.remove("dot_selected");
+
+  if (currentSlide == 0) {
+    currentSlide = qtySlides - 1;
+  } else {
+    currentSlide--;
+  }
+  
+  sliderImage.src = sliderImagesPath + slides[currentSlide].image;
+  sliderText.innerHTML = slides[currentSlide].tagLine;
+  
+  let childrenDots = dots.children;
+  for (let i = 0; i  < childrenDots.length ; i ++) {
+    if (i == currentSlide) {
+      childrenDots[i].classList.add("dot_selected");
+    }  
+  }
+}
+
+bannerArrowRight.onclick = function () {
+
+  let currentSelectedDot = document.querySelector("#banner .dots .dot_selected");
+  currentSelectedDot.classList.remove("dot_selected");
+
+  if (currentSlide == (qtySlides - 1)) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+  
+  sliderImage.src = sliderImagesPath + slides[currentSlide].image;
+  sliderText.innerHTML = slides[currentSlide].tagLine;
+  
+  let childrenDots = dots.children;
+  for (let i = 0; i  < childrenDots.length ; i ++) {
+    if (i == currentSlide) {
+      childrenDots[i].classList.add("dot_selected");
+    }  
+  }
+
+
+}
+
