@@ -17,13 +17,15 @@ const slides = [
 	}
 ]
 
-/* Pointeurs vers diverses diapositives. */
-let currentSlide = 0;
-const firstSlide = 0;
-const lastSlide = slides.length - 1;
-
 /* Configuration */
 const sliderImagesPath = "./assets/images/slideshow/";
+
+/* Pointeurs vers diverses diapositives. 
+ * Noms raccourcis de xxxxSlideIndex, évidemment. 
+ */
+let currentSlide = 0; 
+const firstSlide = 0;
+const lastSlide = slides.length - 1;
 
 /* Pointeurs vers les éléments du DOM où intégrer le carroussel. */
 const dots = document.querySelector("#banner .dots");
@@ -32,14 +34,15 @@ const arrowRight= document.querySelector("#banner .arrow_right");
 const sliderText = document.querySelector("#banner p");
 const sliderImage = document.querySelector("#banner img");
 
-/* Création des bullet points du carroussel. */
-for (let i = firstSlide; i <= lastSlide; i++) {
-  const dot = document.createElement("div");  
-  dot.classList.add("dot");
-  if (firstSlide == i) {
-    dot.classList.add("dot_selected"); // le point initialement sélectionné
+function createInitialDots () {
+  for (let i = firstSlide; i <= lastSlide; i++) {
+    const dot = document.createElement("div");  
+    dot.classList.add("dot");
+    if (i == firstSlide) {
+      dot.classList.add("dot_selected"); // le point initialement sélectionné
+    }
+    dots.appendChild(dot);
   }
-  dots.appendChild(dot);
 }
 
 function resetCurrentSelectedDot () {
@@ -48,10 +51,10 @@ function resetCurrentSelectedDot () {
 }
 
 function setCurrentSelectedDot () {
-  let childrenDots = dots.children;
-  for (let i = 0; i  < childrenDots.length ; i ++) {
-    if (i == currentSlide) {
-      childrenDots[i].classList.add("dot_selected");
+  let childrenDots = dots.children; // It returns a HTMLCollection. Nice.
+  for (let dotIndex = 0; dotIndex  < childrenDots.length ; dotIndex ++) {
+    if (dotIndex == currentSlide) {
+      childrenDots[dotIndex].classList.add("dot_selected");
     }  
   }
 }
@@ -61,25 +64,25 @@ function setSliderImage () {
   sliderText.innerHTML = slides[currentSlide].tagLine;
 }
 
-arrowLeft.onclick = function () {
-
+function moveSliderTo (direction) {
   resetCurrentSelectedDot();
-
-  /* Mise en oeuvre de la boucle infinie vers la GAUCHE. */
-  currentSlide = (currentSlide == firstSlide) ? lastSlide : currentSlide - 1 ; 
-
-  setSliderImage();
+  // Le défilement infini du carrousel, c'est ici...
+  switch (direction) {
+    case 'LEFT':
+      currentSlide = (currentSlide == firstSlide) ? lastSlide : currentSlide - 1 ; 
+      break;
+    case 'RIGHT':
+      currentSlide = (currentSlide == lastSlide) ? firstSlide : currentSlide + 1 ; 
+      break;
+    default:
+      console.log("Wrong direction");
+  }
   setCurrentSelectedDot();
+  setSliderImage();
 }
 
-arrowRight.onclick = function () {
+createInitialDots();
 
-  resetCurrentSelectedDot();
-
-  /* Mise en oeuvre de la boucle infinie vers la DROITE. */
-  currentSlide = (currentSlide == lastSlide) ? firstSlide : currentSlide + 1 ; 
-
-  setSliderImage();
-  setCurrentSelectedDot();
-}
-
+/* Ajout des Event Listener sur les flèches du carrousel */
+arrowLeft.onclick = function () { moveSliderTo('LEFT'); }
+arrowRight.onclick = function () { moveSliderTo('RIGHT'); }
