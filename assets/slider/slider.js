@@ -1,5 +1,5 @@
 /* Pointeurs vers les diapositives principales. */
-let currentSlide = 0; 
+let currentSlide; 
 const firstSlide = 0;
 const lastSlide = slides.length - 1;
 
@@ -24,6 +24,9 @@ function paintDots () {
 
 function moveSliderTo (direction) {
   switch (direction) {
+    case 'FIRST':
+      currentSlide = firstSlide; 
+      break;
     case 'LEFT':
       currentSlide = 
         (currentSlide === firstSlide) ? lastSlide : currentSlide - 1 ; 
@@ -43,7 +46,7 @@ function moveSliderTo (direction) {
   paintDots();
 }
 
-paintDots(); // Avant toute chose, créeer les bullet points du slider
+moveSliderTo('FIRST'); // Overwrite l'état initial du slider dans le HTML
 
 arrowLeft.addEventListener('click', () => moveSliderTo('LEFT'));
 arrowRight.addEventListener('click', () => moveSliderTo('RIGHT'));
