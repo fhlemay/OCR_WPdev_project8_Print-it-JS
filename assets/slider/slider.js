@@ -23,17 +23,13 @@ function createInitialDots () {
   }
 }
 
-function resetCurrentSelectedDot () {
-  let currentSelectedDot = document.querySelector("#banner .dot_selected");
-  currentSelectedDot.classList.remove("dot_selected");
-}
-
 function setCurrentSelectedDot () {
-  let childrenDots = dots.children; // It returns a HTMLCollection. Nice.
-  for (let dotIndex = 0; dotIndex  < childrenDots.length ; dotIndex ++) {
-    if (dotIndex === currentSlide) {
-      childrenDots[dotIndex].classList.add("dot_selected");
-    }  
+  let _dots = dots.children; // It returns a HTMLCollection. Nice.
+  for (let dotIndex = 0; dotIndex  < _dots.length ; dotIndex ++) {
+    if (dotIndex === currentSlide) 
+      _dots[dotIndex].classList.add("dot_selected");
+    else
+      _dots[dotIndex].classList.remove("dot_selected");
   }
 }
 
@@ -43,8 +39,6 @@ function setSliderImage () {
 }
 
 function moveSliderTo (direction) {
-  resetCurrentSelectedDot();
-  // Le défilement infini du carrousel, c'est ici...
   switch (direction) {
     case 'LEFT':
       currentSlide = (currentSlide === firstSlide) ? lastSlide : currentSlide - 1 ; 
