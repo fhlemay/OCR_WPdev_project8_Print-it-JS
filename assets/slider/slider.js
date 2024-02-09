@@ -11,7 +11,7 @@ const sliderText = document.querySelector("#banner p");
 const sliderImage = document.querySelector("#banner img");
 
 function paintDots () {
-  dots.innerHTML = ''; // Efface les bullet points. 
+  dots.innerHTML = ''; // Efface les bullet points à chaque changement d'état. 
   for (let i = firstSlide; i <= lastSlide ; i++) { 
     const dot = document.createElement("div");  
     dot.classList.add("dot");
@@ -20,11 +20,6 @@ function paintDots () {
     }
     dots.appendChild(dot);
   }
-}
-
-function setSliderImage () {
-  sliderImage.src = sliderImagesPath + slides[currentSlide].image;
-  sliderText.innerHTML = slides[currentSlide].tagLine;
 }
 
 function moveSliderTo (direction) {
@@ -40,8 +35,12 @@ function moveSliderTo (direction) {
     default:
       console.log("Wrong direction");
   }
+
+  /* Régler la nouvelle image et le tagline du carrousel */
+  sliderImage.src = sliderImagesPath + slides[currentSlide].image;
+  sliderText.innerHTML = slides[currentSlide].tagLine;
+
   paintDots();
-  setSliderImage();
 }
 
 paintDots(); // Avant toute chose, créeer les bullet points du slider
