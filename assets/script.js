@@ -84,5 +84,5 @@ function moveSliderTo (direction) {
 createInitialDots();
 
 /* Ajout des Event Listener sur les flèches du carrousel */
-arrowLeft.onclick = function () { moveSliderTo('LEFT'); }
-arrowRight.onclick = function () { moveSliderTo('RIGHT'); }
+arrowLeft.addEventListener('click', () => moveSliderTo('LEFT'));
+arrowRight.addEventListener('click', () => moveSliderTo('RIGHT'));
