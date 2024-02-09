@@ -38,7 +38,7 @@ function createInitialDots () {
   for (let i = firstSlide; i <= lastSlide; i++) {
     const dot = document.createElement("div");  
     dot.classList.add("dot");
-    if (i == firstSlide) {
+    if (i === firstSlide) {
       dot.classList.add("dot_selected"); // le point initialement sélectionné
     }
     dots.appendChild(dot);
@@ -53,7 +53,7 @@ function resetCurrentSelectedDot () {
 function setCurrentSelectedDot () {
   let childrenDots = dots.children; // It returns a HTMLCollection. Nice.
   for (let dotIndex = 0; dotIndex  < childrenDots.length ; dotIndex ++) {
-    if (dotIndex == currentSlide) {
+    if (dotIndex === currentSlide) {
       childrenDots[dotIndex].classList.add("dot_selected");
     }  
   }
@@ -69,10 +69,10 @@ function moveSliderTo (direction) {
   // Le défilement infini du carrousel, c'est ici...
   switch (direction) {
     case 'LEFT':
-      currentSlide = (currentSlide == firstSlide) ? lastSlide : currentSlide - 1 ; 
+      currentSlide = (currentSlide === firstSlide) ? lastSlide : currentSlide - 1 ; 
       break;
     case 'RIGHT':
-      currentSlide = (currentSlide == lastSlide) ? firstSlide : currentSlide + 1 ; 
+      currentSlide = (currentSlide === lastSlide) ? firstSlide : currentSlide + 1 ; 
       break;
     default:
       console.log("Wrong direction");
