@@ -1,6 +1,4 @@
-/* Pointeurs vers diverses diapositives. 
- * Noms raccourcis de xxxxSlideIndex, évidemment. 
- */
+/* Pointeurs vers les diapositives principales. */
 let currentSlide = 0; 
 const firstSlide = 0;
 const lastSlide = slides.length - 1;
@@ -24,12 +22,12 @@ function createInitialDots () {
 }
 
 function setCurrentSelectedDot () {
-  let _dots = dots.children; // It returns a HTMLCollection. Nice.
-  for (let dotIndex = 0; dotIndex  < _dots.length ; dotIndex ++) {
-    if (dotIndex === currentSlide) 
-      _dots[dotIndex].classList.add("dot_selected");
+  for (let i = firstSlide; i <= lastSlide ; i++) {
+    const dotClasses = dots.children[i].classList;
+    if (i === currentSlide) 
+      dotClasses.add("dot_selected");
     else
-      _dots[dotIndex].classList.remove("dot_selected");
+      dotClasses.remove("dot_selected");
   }
 }
 
@@ -41,10 +39,12 @@ function setSliderImage () {
 function moveSliderTo (direction) {
   switch (direction) {
     case 'LEFT':
-      currentSlide = (currentSlide === firstSlide) ? lastSlide : currentSlide - 1 ; 
+      currentSlide = 
+        (currentSlide === firstSlide) ? lastSlide : currentSlide - 1 ; 
       break;
     case 'RIGHT':
-      currentSlide = (currentSlide === lastSlide) ? firstSlide : currentSlide + 1 ; 
+      currentSlide = 
+        (currentSlide === lastSlide) ? firstSlide : currentSlide + 1 ; 
       break;
     default:
       console.log("Wrong direction");
@@ -53,7 +53,7 @@ function moveSliderTo (direction) {
   setSliderImage();
 }
 
-createInitialDots();
+createInitialDots(); // Avant toute chose, créeer les bullet points du slider
 
 arrowLeft.addEventListener('click', () => moveSliderTo('LEFT'));
 arrowRight.addEventListener('click', () => moveSliderTo('RIGHT'));
