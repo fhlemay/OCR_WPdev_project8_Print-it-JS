@@ -10,24 +10,15 @@ const arrowRight= document.querySelector("#banner .arrow_right");
 const sliderText = document.querySelector("#banner p");
 const sliderImage = document.querySelector("#banner img");
 
-function createInitialDots () {
-  for (let i = firstSlide; i <= lastSlide; i++) {
+function paintDots () {
+  dots.innerHTML = ''; // Efface les bullet points. 
+  for (let i = firstSlide; i <= lastSlide ; i++) { 
     const dot = document.createElement("div");  
     dot.classList.add("dot");
-    if (i === firstSlide) {
-      dot.classList.add("dot_selected"); // le point initialement sélectionné
+    if (i === currentSlide) {
+      dot.classList.add("dot_selected"); 
     }
     dots.appendChild(dot);
-  }
-}
-
-function setCurrentSelectedDot () {
-  for (let i = firstSlide; i <= lastSlide ; i++) {
-    const dotClasses = dots.children[i].classList;
-    if (i === currentSlide) 
-      dotClasses.add("dot_selected");
-    else
-      dotClasses.remove("dot_selected");
   }
 }
 
@@ -49,11 +40,11 @@ function moveSliderTo (direction) {
     default:
       console.log("Wrong direction");
   }
-  setCurrentSelectedDot();
+  paintDots();
   setSliderImage();
 }
 
-createInitialDots(); // Avant toute chose, créeer les bullet points du slider
+paintDots(); // Avant toute chose, créeer les bullet points du slider
 
 arrowLeft.addEventListener('click', () => moveSliderTo('LEFT'));
 arrowRight.addEventListener('click', () => moveSliderTo('RIGHT'));
